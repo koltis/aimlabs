@@ -147,12 +147,13 @@ function main() {
 
   window.addEventListener("click", () => {
     const rect = canvas.getBoundingClientRect();
-    const center = document.querySelector(".left");
+    const center = document.querySelector(".left").getBoundingClientRect();
+    console.log(center);
     const pickPosition = {
-      x: ((center.clientX - rect.left) / canvas.width) * 2 - 1,
-      y: ((center.clientY - rect.top) / canvas.height) * -2 + 1,
+      x: ((center.left - rect.left) / canvas.width) * 2 - 1,
+      y: ((center.top - rect.top) / canvas.height) * -2 + 1,
     };
-
+    console.log(pickPosition);
     raycaster.setFromCamera(pickPosition, camera);
     const intersectedObjects = raycaster.intersectObjects(scene.children);
     if (intersectedObjects.length) {
