@@ -149,10 +149,9 @@ function main() {
     const rect = canvas.getBoundingClientRect();
     const center = document.querySelector(".left");
     const pickPosition = {
-			x: (( center.clientX - rect.left ) / canvas.width)* 2 - 1; ,
-			y: (( center.clientY - rect.top ) / canvas.height) * - 2 + 1
-		};
-   
+      x: ((center.clientX - rect.left) / canvas.width) * 2 - 1,
+      y: ((center.clientY - rect.top) / canvas.height) * -2 + 1,
+    };
 
     raycaster.setFromCamera(pickPosition, camera);
     const intersectedObjects = raycaster.intersectObjects(scene.children);
