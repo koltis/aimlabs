@@ -146,7 +146,15 @@ function main() {
   const raycaster = new THREE.Raycaster();
 
   window.addEventListener("click", () => {
-    raycaster.setFromCamera({ x: 0, y: 0 }, camera);
+    const rect = canvas.getBoundingClientRect();
+    const center = document.querySelector(".left");
+    const pickPosition = {
+			x: (( center.clientX - rect.left ) / canvas.width)* 2 - 1; ,
+			y: (( center.clientY - rect.top ) / canvas.height) * - 2 + 1
+		};
+   
+
+    raycaster.setFromCamera(pickPosition, camera);
     const intersectedObjects = raycaster.intersectObjects(scene.children);
     if (intersectedObjects.length) {
       // pick the first object. It's the closest one
