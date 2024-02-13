@@ -56,48 +56,28 @@ function main() {
     const planeGeo = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeMat = new THREE.MeshBasicMaterial({
       map: texture,
-      side: THREE.DoubleSide,
     });
     planeMat.color.setRGB(1.5, 1.5, 1.5);
     const mesh = new THREE.Mesh(planeGeo, planeMat);
     mesh.rotation.x = Math.PI * -0.5;
     scene.add(mesh);
-  }
 
-  {
-    const planeSize = 30;
+    const secondPlaneGeo = new THREE.PlaneGeometry(40, 30);
 
-    const texture = loader.load(
-      "https://threejs.org/manual/examples/resources/images/checker.png"
-    );
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.magFilter = THREE.NearestFilter;
-    texture.colorSpace = THREE.SRGBColorSpace;
-    const repeats = planeSize / 2;
-    texture.repeat.set(repeats, repeats);
-
-    const planeGeo = new THREE.PlaneGeometry(40, planeSize);
-    const planeMat = new THREE.MeshBasicMaterial({
-      map: texture,
-      side: THREE.DoubleSide,
-    });
     planeMat.color.setRGB(1.5, 1.5, 1.5);
-    const mesh = new THREE.Mesh(planeGeo, planeMat);
+    const secondMesh = new THREE.Mesh(secondPlaneGeo, planeMat);
 
-    scene.add(mesh);
+    scene.add(secondMesh);
   }
   {
     const sphereRadius = 1;
-    const sphereWidthDivisions = 32;
-    const sphereHeightDivisions = 16;
+    const sphereWidthDivisions = 16;
+    const sphereHeightDivisions = 8;
     const sphereGeo = new THREE.SphereGeometry(
       sphereRadius,
       sphereWidthDivisions,
       sphereHeightDivisions
     );
-
-    const planeSize = 1;
 
     const numSpheres = 3;
     for (let i = 0; i < numSpheres; ++i) {
@@ -148,12 +128,12 @@ function main() {
   window.addEventListener("click", () => {
     const rect = canvas.getBoundingClientRect();
     const center = document.querySelector(".left").getBoundingClientRect();
-    console.log(center);
+
     const pickPosition = {
       x: ((center.left - rect.left) / canvas.width) * 2 - 1,
       y: ((center.top - rect.top) / canvas.height) * -2 + 1,
     };
-    console.log(pickPosition);
+
     raycaster.setFromCamera(pickPosition, camera);
     const intersectedObjects = raycaster.intersectObjects(scene.children);
     if (intersectedObjects.length) {
@@ -182,11 +162,6 @@ function main() {
 
     resizeRendererToDisplaySize(renderer);
     stats.update();
-    {
-      const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    }
 
     renderer.render(scene, camera);
 
